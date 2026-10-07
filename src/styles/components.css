@@ -1,0 +1,136 @@
+.orbit-root {
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-md);
+  color: var(--orbit-color-text);
+  background: var(--orbit-color-bg);
+}
+
+.orbit-visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---- Button ---------------------------------------------------------------- */
+.orbit-button {
+  --_bg: var(--orbit-color-accent);
+  --_bg-hover: var(--orbit-color-accent-hover);
+  --_fg: var(--orbit-color-on-accent);
+  --_border: transparent;
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--orbit-space-2);
+  font: inherit; font-weight: 600; line-height: 1;
+  border-radius: var(--orbit-radius-md); border: 1px solid var(--_border);
+  background: var(--_bg); color: var(--_fg); cursor: pointer;
+  transition: background var(--orbit-duration-fast), border-color var(--orbit-duration-fast);
+}
+.orbit-button:hover:not(:disabled) { background: var(--_bg-hover); }
+.orbit-button:focus-visible { outline: none; box-shadow: var(--orbit-focus-ring); }
+.orbit-button:disabled { opacity: 0.5; cursor: not-allowed; }
+.orbit-button[data-loading] { cursor: progress; opacity: 1; }
+.orbit-button[data-loading] .orbit-button__label { visibility: hidden; }
+.orbit-button--sm { height: 30px; padding: 0 var(--orbit-space-3); font-size: var(--orbit-font-size-sm); }
+.orbit-button--md { height: 38px; padding: 0 var(--orbit-space-4); }
+.orbit-button--lg { height: 46px; padding: 0 var(--orbit-space-6); font-size: var(--orbit-font-size-lg); }
+.orbit-button--outline { --_bg: transparent; --_bg-hover: var(--orbit-color-accent-soft); --_fg: var(--orbit-color-text); --_border: var(--orbit-color-border-strong); }
+.orbit-button--ghost { --_bg: transparent; --_bg-hover: var(--orbit-color-accent-soft); --_fg: var(--orbit-color-text); }
+.orbit-button--danger { --_bg: var(--orbit-color-danger); --_bg-hover: var(--orbit-color-danger-hover); --_fg: #fff; }
+.orbit-spinner {
+  position: absolute; width: 1em; height: 1em; border-radius: 50%;
+  border: 2px solid currentColor; border-right-color: transparent;
+  animation: orbit-spin 0.7s linear infinite;
+}
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+/* ---- TextField --------------------------------------------------------------- */
+.orbit-field { display: grid; gap: var(--orbit-space-1); }
+.orbit-field__label { font-weight: 600; font-size: var(--orbit-font-size-sm); }
+.orbit-field__required { color: var(--orbit-color-danger); margin-left: 2px; }
+.orbit-field__description { color: var(--orbit-color-text-muted); font-size: var(--orbit-font-size-sm); }
+.orbit-field__error { color: var(--orbit-color-danger); font-size: var(--orbit-font-size-sm); }
+.orbit-input {
+  font: inherit; height: 38px; padding: 0 var(--orbit-space-3);
+  border-radius: var(--orbit-radius-md); border: 1px solid var(--orbit-color-border-strong);
+  background: var(--orbit-color-surface); color: var(--orbit-color-text);
+}
+.orbit-input:focus-visible { outline: none; border-color: var(--orbit-color-accent); box-shadow: var(--orbit-focus-ring); }
+.orbit-input[aria-invalid="true"] { border-color: var(--orbit-color-danger); }
+
+/* ---- Switch -------------------------------------------------------------------- */
+.orbit-switch { display: inline-flex; align-items: center; gap: var(--orbit-space-2); cursor: pointer; }
+.orbit-switch__track {
+  width: 38px; height: 22px; border-radius: 999px; padding: 2px; border: none; cursor: pointer;
+  background: var(--orbit-color-border-strong); transition: background var(--orbit-duration-fast);
+}
+.orbit-switch__track[aria-checked="true"] { background: var(--orbit-color-accent); }
+.orbit-switch__track:focus-visible { outline: none; box-shadow: var(--orbit-focus-ring); }
+.orbit-switch__track:disabled { opacity: 0.5; cursor: not-allowed; }
+.orbit-switch__thumb {
+  display: block; width: 18px; height: 18px; border-radius: 50%; background: #fff;
+  transition: transform var(--orbit-duration-fast);
+}
+.orbit-switch__track[aria-checked="true"] .orbit-switch__thumb { transform: translateX(16px); }
+
+/* ---- Tabs ---------------------------------------------------------------------- */
+.orbit-tabs__list { display: flex; gap: var(--orbit-space-1); border-bottom: 1px solid var(--orbit-color-border); }
+.orbit-tabs__list[aria-orientation="vertical"] { flex-direction: column; border-bottom: none; border-right: 1px solid var(--orbit-color-border); }
+.orbit-tabs__tab {
+  font: inherit; font-weight: 500; padding: var(--orbit-space-2) var(--orbit-space-3);
+  background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  color: var(--orbit-color-text-muted); cursor: pointer; border-radius: var(--orbit-radius-sm) var(--orbit-radius-sm) 0 0;
+}
+.orbit-tabs__tab[aria-selected="true"] { color: var(--orbit-color-text); border-bottom-color: var(--orbit-color-accent); }
+.orbit-tabs__tab:focus-visible { outline: none; box-shadow: var(--orbit-focus-ring); }
+.orbit-tabs__tab:disabled { opacity: 0.45; cursor: not-allowed; }
+.orbit-tabs__panel { padding: var(--orbit-space-4) 0; }
+.orbit-tabs__panel:focus-visible { outline: none; box-shadow: var(--orbit-focus-ring); border-radius: var(--orbit-radius-sm); }
+
+/* ---- Dialog -------------------------------------------------------------------- */
+.orbit-dialog__overlay {
+  position: fixed; inset: 0; z-index: var(--orbit-z-overlay); background: var(--orbit-color-overlay);
+  display: grid; place-items: center; padding: var(--orbit-space-4);
+  animation: orbit-fade var(--orbit-duration-normal) ease-out;
+}
+.orbit-dialog {
+  width: min(520px, 100%); max-height: calc(100dvh - 32px); overflow: auto;
+  background: var(--orbit-color-surface-raised); color: var(--orbit-color-text);
+  border-radius: var(--orbit-radius-lg); box-shadow: var(--orbit-shadow-lg); padding: var(--orbit-space-6);
+  font-family: var(--orbit-font-sans); animation: orbit-pop var(--orbit-duration-normal) ease-out;
+}
+.orbit-dialog:focus-visible { outline: none; }
+.orbit-dialog__title { margin: 0 0 var(--orbit-space-2); font-size: var(--orbit-font-size-lg); }
+.orbit-dialog__description { margin: 0 0 var(--orbit-space-4); color: var(--orbit-color-text-muted); }
+.orbit-dialog__footer { display: flex; justify-content: flex-end; gap: var(--orbit-space-2); margin-top: var(--orbit-space-6); }
+@keyframes orbit-fade { from { opacity: 0; } }
+@keyframes orbit-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
+
+/* ---- Tooltip ------------------------------------------------------------------- */
+.orbit-tooltip {
+  position: fixed; z-index: var(--orbit-z-tooltip); max-width: 260px;
+  padding: 6px 10px; border-radius: var(--orbit-radius-sm);
+  background: var(--orbit-color-tooltip-bg); color: var(--orbit-color-tooltip-text);
+  font: 500 var(--orbit-font-size-sm)/1.35 var(--orbit-font-sans); box-shadow: var(--orbit-shadow-md);
+  animation: orbit-fade var(--orbit-duration-fast) ease-out;
+}
+
+/* ---- Toast --------------------------------------------------------------------- */
+.orbit-toast-region {
+  position: fixed; z-index: var(--orbit-z-toast); right: var(--orbit-space-4); bottom: var(--orbit-space-4);
+  display: grid; gap: var(--orbit-space-2); width: min(360px, calc(100vw - 32px));
+  margin: 0; padding: 0; list-style: none; font-family: var(--orbit-font-sans);
+}
+.orbit-toast {
+  display: grid; grid-template-columns: 1fr auto; gap: var(--orbit-space-1) var(--orbit-space-3);
+  padding: var(--orbit-space-3) var(--orbit-space-4); border-radius: var(--orbit-radius-md);
+  background: var(--orbit-color-surface-raised); color: var(--orbit-color-text);
+  border: 1px solid var(--orbit-color-border); border-left: 4px solid var(--orbit-color-accent);
+  box-shadow: var(--orbit-shadow-md); animation: orbit-pop var(--orbit-duration-normal) ease-out;
+}
+.orbit-toast--success { border-left-color: var(--orbit-color-success); }
+.orbit-toast--danger { border-left-color: var(--orbit-color-danger); }
+.orbit-toast__title { font-weight: 600; }
+.orbit-toast__description { grid-column: 1; color: var(--orbit-color-text-muted); font-size: var(--orbit-font-size-sm); }
+.orbit-toast__close {
+  grid-row: 1 / span 2; grid-column: 2; align-self: start; background: none; border: none; cursor: pointer;
+  color: var(--orbit-color-text-muted); font-size: 18px; line-height: 1; padding: 2px 4px; border-radius: var(--orbit-radius-sm);
+}
+.orbit-toast__close:focus-visible { outline: none; box-shadow: var(--orbit-focus-ring); }
